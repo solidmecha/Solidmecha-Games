@@ -8,13 +8,16 @@ int currentLvl;
 bool madeLvl;
 GameObject currentTile;
 string[] LevelArray=new string[6];
+        int tpIndex;
 GameObject[] teleporters;
 // "17777772"
 // "506"
 // "37777774"
 	// Use this for initialization
 	void Start () {
-	teleporters=new GameObject[2];
+	teleporters=new GameObject[24];
+            tpIndex=0;
+    
 	currentLvl=14;
 	madeLvl=false;
 	}
@@ -94,7 +97,7 @@ void handlePieces(int l) //gamemanager.pieceloc[0]=0 top row, [1]=0 left-most co
 	GameManager.GoalLoc[0]=2;
 	GameManager.GoalLoc[1]=1;
 
-	placeTeleporter(new int[2]{0,0}, new int[2]{1,1});
+	placeTeleporter(new int[2]{0,0}, new int[2]{1,1}, Color.blue);
 
 	break;
 
@@ -124,7 +127,7 @@ void handlePieces(int l) //gamemanager.pieceloc[0]=0 top row, [1]=0 left-most co
 
 
 
-void placeDoor(int[] a, int[] b)
+public void placeDoor(int[] a, int[] b)
 {
 	float posX1=-4+(a[1]*1.25f);
 	float posY1=3-(a[0]*1.25f);
@@ -140,28 +143,32 @@ void placeDoor(int[] a, int[] b)
 
 }
 
-void placeTeleporter(int[] a, int[] b)
+public void placeTeleporter(int[] a, int[] b, Color c)
 {
 	float posX1=-4+(a[1]*1.25f);
 	float posY1=3-(a[0]*1.25f);
 	float posX2=-4+(b[1]*1.25f);
 	float posY2=3-(b[0]*1.25f);
-	teleporters[0]=Instantiate(GameManager.Teleporter, new Vector2(posX1,posY1), Quaternion.identity)as GameObject;
-	teleporters[1]=Instantiate(GameManager.Teleporter, new Vector2(posX2,posY2), Quaternion.identity)as GameObject;
-	teleportScript ts1= (teleportScript)teleporters[0].GetComponent(typeof(teleportScript));
-	teleportScript ts2= (teleportScript)teleporters[1].GetComponent(typeof(teleportScript));
-		ts1.otherTele=teleporters[1];
+	teleporters[tpIndex]=Instantiate(GameManager.Teleporter, new Vector2(posX1,posY1), Quaternion.identity)as GameObject;
+	teleporters[tpIndex+1]=Instantiate(GameManager.Teleporter, new Vector2(posX2,posY2), Quaternion.identity)as GameObject;
+	teleportScript ts1= (teleportScript)teleporters[tpIndex].GetComponent(typeof(teleportScript));
+	teleportScript ts2= (teleportScript)teleporters[tpIndex+1].GetComponent(typeof(teleportScript));
+            SpriteRenderer sr = teleporters[tpIndex].GetComponent<SpriteRenderer>();
+            sr.color = c;
+            sr = teleporters[tpIndex+1].GetComponent<SpriteRenderer>();
+            sr.color = c;
+		ts1.otherTele=teleporters[tpIndex+1];
 		ts1.otherTS=ts2;
 		ts1.teleLoc=new int[2];
 		ts1.teleLoc[0]=a[0];
 		ts1.teleLoc[1]=a[1];
 
-		ts2.otherTele=teleporters[0];
+		ts2.otherTele=teleporters[tpIndex];
 		ts2.otherTS=ts1;
 		ts2.teleLoc=new int[2];
 		ts2.teleLoc[0]=b[0];
 		ts2.teleLoc[1]=b[1];
-
+            tpIndex += 2;
 		return;
 
 }

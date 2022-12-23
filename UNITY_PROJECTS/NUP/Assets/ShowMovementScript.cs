@@ -10,7 +10,7 @@ public class ShowMovementScript : MonoBehaviour {
 	float Xoff;
 	float Yoff;
 
-	void OnMouseOver() {
+	void OnMouseDown() {
 			if(canSwipeMove && !MoveCircle.makeMove)
 			{
 			if (areThereCircles) {
@@ -25,7 +25,7 @@ public class ShowMovementScript : MonoBehaviour {
 					}
 	}
 
-	void OnMouseExit()
+	void OnMouseUp()
 		{canSwipeMove = true;
 				}
 

@@ -9,7 +9,7 @@ public class MoveCircle:MonoBehaviour {
 	float frameCount;
 	Vector3 Location=new Vector3();
 	Vector3 realLocation=new Vector3();
-	 void OnMouseOver()
+	 void OnMouseDown()
 	{
 		if(!makeMove && !GameManager.stopShowingMovement)
 			{

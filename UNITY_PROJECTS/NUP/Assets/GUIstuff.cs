@@ -16,17 +16,19 @@ public class GUIstuff : MonoBehaviour {
 			GUI.Label (new Rect ((Screen.width / 2f), 0f, 300f, 500f), "<color=white><size=33>Time: "+needvarName+"</size></color>");
 			GUI.Label (new Rect (Screen.width / 4f, 0f, 300f, 50f),  "<color=white><size=33>Moves: "+sNumberOfMoves+  "</size></color>");
 			GUI.Label (new Rect (Screen.width / 1.25f, 0f, 300f, 50f),  "<color=white><size=33>Wins: "+sWins  +"</size></color>");
-			if(GUI.Button(new Rect(Screen.width-(Screen.width/10f+25),65f,Screen.width/10f+25,Screen.height/15f+25f), "<size=26>Exit</size>"))
+			if(GUI.Button(new Rect(Screen.width-(Screen.width/10f+25),65f,Screen.width/10f+25,Screen.height/15f+25f), "<size=24>Teleport</size>"))
 			{
-				Application.Quit();
-			}
+                GameManager.teleportersOn = !GameManager.teleportersOn;
+                Application.LoadLevel(0);
+            }
 
 
 
 	if(GUI.Button(new Rect(Screen.width-(Screen.width/10f+25),165f,Screen.width/10f+25,Screen.height/15f+25f), "<size=26>Collect</size>"))
 {
 	GameManager.collectMode=!GameManager.collectMode;
-}
+                Application.LoadLevel(0);
+            }
 
 
 			//sets a specific timelimit/move limit
@@ -56,6 +58,7 @@ public class GUIstuff : MonoBehaviour {
 			if(GUI.Button(new Rect(1, Screen.height/4,Screen.width/10f+50f, Screen.height/15f+35f), "<size=26>Shuffle</size>"))
 			{
 				GameManager.stopShowingMovement=true;
+                if(Application.loadedLevel==0)
 				GameManager.placePieces();
 			}
 if(GameManager.withCountDown)

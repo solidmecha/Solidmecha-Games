@@ -64,6 +64,8 @@ public class GameManager : MonoBehaviour {
 	public static int[] SidekickLoc=new int[2];
 	public static int[] GoalLoc = new int[2];
 
+    public static List<int[]> teleportLocs=new List<int[]> { };
+
 		public static Vector3 PlayerStart;
 		public static Vector3 KittenStart;
 		public static Vector3 HelperStart;
@@ -83,8 +85,11 @@ public class GameManager : MonoBehaviour {
 
 	public static bool replay;
 	public static bool collectMode;
+    public static bool teleportersOn;
+        public List<Color> teleColor = new List<Color> {new Color(.2367f,.01f,.99f,1), new Color(.6875f, .76757f, .867f,1), new Color(.09f, .83f, .2f), new Color(.37f, .28f, 0, 1) };
 
-	public static bool withCountDown;
+
+    public static bool withCountDown;
 
 	public static bool madeLevel;
 
@@ -94,6 +99,7 @@ public class GameManager : MonoBehaviour {
 	
 		// Use this for initialization
 	void Start () {
+          
 		//	withCountDown = false;
 	//	customLvl=true;
 			secondsPast = 300 + bonusTime*60;
@@ -160,9 +166,11 @@ public class GameManager : MonoBehaviour {
 if(replay)
 {replayLastLevel();}
 else
-{		createLevel ();
-		placePieces();
-	}
+{	   createLevel ();
+       placeTeleporters();
+       placePieces();
+       
+   }
 			madeLevel = true;
 		}
 
@@ -193,37 +201,130 @@ else
 				}
 					
 		}
-			
-	}
 
+        }
+    
+
+    void placeTeleporters()
+        {
+            if (teleportersOn)
+            {
+                GameManager.teleportLocs.Clear();
+                System.Random RNG = new System.Random(ThreadSafeRandom.Next());
+                int n = RNG.Next(2, 13);
+
+                for (int i = 0; i < n; i++)
+                {
+                    bool placed = false;
+                    while (!placed)
+                    {
+                        bool buildTele = false;
+                        int[] a = new int[2] { RNG.Next(5), RNG.Next(7) };
+                        int[] b = new int[2] { RNG.Next(5), RNG.Next(7) };
+                        int z = GameManager.teleportLocs.Count;
+                        if (z > 0)
+                        {
+                            for (int j = 0; j < z; j++)
+                            {
+                                if (GameManager.teleportLocs[j][0] != a[0] || GameManager.teleportLocs[j][1] != a[1])
+                                {
+                                    if (GameManager.teleportLocs[j][0] != b[0] || GameManager.teleportLocs[j][1] != b[1])
+                                    {
+                                        if (a[0] != b[0] || a[1] != b[1])
+                                        {
+                                            if (j + 1 == z)
+                                            {
+                                               // if ((SidekickLoc[0] != a[0] || SidekickLoc[1] != a[1]) && (KittenLoc[0] != a[0] || KittenLoc[1] != a[1]) && (PlayerLoc[0] != a[0] || PlayerLoc[1] != a[1]))
+                                                //{
+                                                  //  if ((SidekickLoc[0] != b[0] || SidekickLoc[1] != b[1]) && (KittenLoc[0] != b[0] || KittenLoc[1] != b[1]) && (PlayerLoc[0] != b[0] || PlayerLoc[1] != b[1]))
+                                                        buildTele = true;
+                                                //}
+                                            }
+
+                                        }
+                                        else
+                                            break;
+                                    }
+                                    else
+                                        break;
+                                }
+                                else
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            if (a[0] != b[0] || a[1] != b[1])
+                                buildTele = true;
+                        }
+
+                        if (buildTele)
+                        {
+                            CustomLevels cl = (CustomLevels)GetComponent(typeof(CustomLevels));
+                            cl.placeTeleporter(a, b, teleColor[i]);
+                            placed = true;
+                            int[] c = new int[2] { a[0], a[1] };
+                            int[] d = new int[2] { b[0], b[1] };
+                            GameManager.teleportLocs.Add(c);
+                            GameManager.teleportLocs.Add(d);
+                        }
+                    }
+                }
+            }
+        }
+    bool teleLocsContain(int[] A)
+        {
+            bool doesContain=false;
+          
+            foreach(int[] loc in teleportLocs)
+            {
+                if(loc[0]==A[0] && loc[1]==A[1])
+                {
+                    doesContain = true;
+                }
+            }
+            return doesContain;
+        }
 	public static void placePieces() //randomly
 	{
 		psudoRandomIntArray[0]=ThreadSafeRandom.Next ();
 		System.Random squirell = new System.Random (psudoRandomIntArray[0]);
-		for(int i=0;i<2;i++)
+        GameManager gm = (GameManager)scriptThingy.GetComponent(typeof(GameManager));
+
+            if (collectMode)
+{float f=-4+(PlayerLoc[1]*1.25f);
+float g=3-(PlayerLoc[0]*1.25f);
+               
+Instantiate(gm.collectionStar,new Vector3(f, g, 0), Quaternion.identity);}
+
+            for (int i=0;i<2;i++)
 			{
 				PlayerLoc[i]=0;
 				KittenLoc[i]=0;
 				SidekickLoc[i]=0;
 				GoalLoc[i]=0;
 			}
-		PlayerLoc[0]=squirell.Next (0,5);
-		PlayerLoc[1]=squirell.Next (0,7);
+            do
+            {
+                PlayerLoc[0] = squirell.Next(0, 5);
+                PlayerLoc[1] = squirell.Next(0, 7);
+            }
+            while (gm.teleLocsContain(PlayerLoc));
 		do
 			{
 		KittenLoc[0]=squirell.Next (0,5);
 		KittenLoc[1]=squirell.Next (0,7);
 			}
-					while(KittenLoc[0]==PlayerLoc[0] && PlayerLoc[1]==KittenLoc[1]);
+					while(KittenLoc[0]==PlayerLoc[0] && PlayerLoc[1]==KittenLoc[1] || gm.teleLocsContain(KittenLoc));
 
 	do{
 		SidekickLoc[0]=squirell.Next (0,5);
 		SidekickLoc[1]=squirell.Next (0,7);
 			}
-			while((SidekickLoc[0]==PlayerLoc[0] && PlayerLoc[1]==SidekickLoc[1]) || (SidekickLoc[0]==KittenLoc[0] && KittenLoc[1]==SidekickLoc[1]));
+			while(((SidekickLoc[0]==PlayerLoc[0] && PlayerLoc[1]==SidekickLoc[1]) || (SidekickLoc[0]==KittenLoc[0] && KittenLoc[1]==SidekickLoc[1])) || gm.teleLocsContain(SidekickLoc));
 
 		do{
-		if(numberOfWins<5)
+		if(numberOfWins<2)
 		{
 		GoalLoc[0]=squirell.Next (0,5);
 		GoalLoc[1]=squirell.Next (0,7);
@@ -321,6 +422,13 @@ else
 				}
 					
 		}
+
+                for(int i=0;i<GameManager.teleportLocs.Count;i++)
+            {
+                CustomLevels cl = (CustomLevels)GetComponent(typeof(CustomLevels));
+                cl.placeTeleporter(GameManager.teleportLocs[i], GameManager.teleportLocs[i + 1], teleColor[i / 2]);
+                i++;
+            }
 	}
 
 	public static bool containsPiece(int r, int c)
