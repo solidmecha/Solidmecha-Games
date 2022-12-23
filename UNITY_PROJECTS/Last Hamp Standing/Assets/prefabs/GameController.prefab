@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1970958589575306}
+  m_IsPrefabAsset: 1
+--- !u!1 &1970958589575306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4864486755032276}
+  - component: {fileID: 114886442860402314}
+  - component: {fileID: 114756032775032950}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4864486755032276
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1970958589575306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.8314484, y: 1.405566, z: -0.03606322}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114756032775032950
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1970958589575306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08d0b0b1c80d69b428f7e88f23e36ab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Colors:
+  - {r: 0.8773585, g: 0.062077243, b: 0.062077243, a: 1}
+  - {r: 0.0047169924, g: 0.972458, b: 1, a: 1}
+  - {r: 0, g: 0.06282759, b: 1, a: 1}
+  - {r: 0.034482956, g: 1, b: 0, a: 1}
+  - {r: 0.5283019, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0.59607846, a: 1}
+  - {r: 0.81787586, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0.62734854, b: 0, a: 1}
+  - {r: 0.95129585, g: 1, b: 0, a: 1}
+  - {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
+  - {r: 0.16398183, g: 0.5188679, b: 0.18142575, a: 1}
+  - {r: 0, g: 1, b: 0.7105427, a: 1}
+  PickUps:
+  - {fileID: 1045448744546784, guid: ef83c5dcf5799e74fb8a2c478f5bab46, type: 2}
+  - {fileID: 1321158662986694, guid: 0f4ec2fa59d608c4bb3e270b5a39ef2b, type: 2}
+  - {fileID: 1419538483235510, guid: 2553837e8fd9582409f48df7c8b679c1, type: 2}
+  - {fileID: 1469157500008720, guid: 2156b097d2fe678439412c3490e25951, type: 2}
+  - {fileID: 1468276025636704, guid: 526b2880fbdb7684fb24c7203983398c, type: 2}
+  MovementBuff: 1
+  CritBuff: 20
+  HitBuff: 10
+  DmgBuff: 1
+  HPBuff: 3
+  Bullet: {fileID: 1402712815225978, guid: cb28fc7985641d647be1062486317c55, type: 2}
+  ReadyCount: 0
+  PlayerCount: 0
+  Players: []
+  CurrentState: 0
+  MultiSpaceController: {fileID: 1999646265650170, guid: f0cbb30cd547157408116a5222164023,
+    type: 2}
+--- !u!114 &114886442860402314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1970958589575306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 179
+    i1: 196
+    i2: 240
+    i3: 24
+    i4: 68
+    i5: 174
+    i6: 84
+    i7: 52
+    i8: 138
+    i9: 18
+    i10: 42
+    i11: 1
+    i12: 149
+    i13: 49
+    i14: 97
+    i15: 149
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

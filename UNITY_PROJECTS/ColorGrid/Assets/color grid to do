@@ -1,0 +1,15 @@
+color grid to do
+
+1. generate starting points 
+	at edge
+
+2. generate end points
+	at opposite edge
+
+3. generate snake
+
+4. control head of snake and move snake
+
+5. resolve reaching endpoint
+
+6. resolve collisions
